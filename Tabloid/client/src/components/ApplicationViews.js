@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import CategoryList from "./Category/CategoryList"
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
@@ -15,6 +16,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/login">
           <Login />
+        </Route>
+        
+        <Route path="/categories">
+          < CategoryList />
         </Route>
 
         <Route path="/register">
