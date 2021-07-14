@@ -2,7 +2,7 @@ import { getToken } from "./authManager";
 
 const baseUrl = '/api/category';
 
-const getAllCategories = () => {
+export const getAllCategories = () => {
     return getToken().then((token) => {
         return fetch(`${baseUrl}`, {
             method: "GET",
@@ -19,7 +19,7 @@ const getAllCategories = () => {
     });
 };
 
-const addCategory = (category) => {
+export const addCategory = (category) => {
     return getToken().then((token) => {
         return fetch(baseUrl, {
             method: "POST",
@@ -40,5 +40,3 @@ const addCategory = (category) => {
     });
 }
 
-
-export default getAllCategories

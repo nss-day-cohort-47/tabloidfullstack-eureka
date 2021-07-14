@@ -14,11 +14,11 @@ namespace Tabloid.Controllers
         {
             _userProfileRepository = userProfileRepository;
         }
-        [HttpGet("GetAdminUsers")]
-        public IActionResult GetAllAdminUsers()
-        {
-            return Ok(_userProfileRepository.GetAdminUsers());
-        }
+        //[HttpGet("GetAdminUsers")]
+        //public IActionResult GetAllAdminUsers()
+        //{
+        //    return Ok(_userProfileRepository.GetAdminUsers());
+        //}
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetUserProfile(string firebaseUserId)
         {
