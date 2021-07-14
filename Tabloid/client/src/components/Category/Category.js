@@ -6,8 +6,8 @@ const Category = ({category}) => {
         <Card>
             <CardBody>
                 <div>
-                    <h3>Categories</h3>
-                    <p>{category.name}</p>
+                
+                    <p>{category.id}: {category.name}</p>
                 </div>
             </CardBody>
         </Card>
