@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Sql;
 using Tabloid.Models;
 using Tabloid.Utils;
 
@@ -28,6 +29,7 @@ namespace Tabloid.Repositories
                         CreateDateTime,
                         PublishDateTime,
                         CategoryId,
+                        IsApproved,
                         UserProfileId
                         FROM Post
                         ORDER BY CreateDateTime
@@ -47,6 +49,7 @@ namespace Tabloid.Repositories
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
                             PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
                             CategoryId = DbUtils.GetInt(reader, "CategoryId"),
+                            IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
                             UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
                         });
                     }
