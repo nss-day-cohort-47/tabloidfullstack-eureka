@@ -1,11 +1,11 @@
 ﻿using System;
+using Tabloid.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Tabloid.Repositories
 {
-    public class Class
+    public interface IPostRepository
     {
+        public List<Post> GetAll();
     }
 }
