@@ -79,6 +79,7 @@ namespace Tabloid.Repositories
             }
         }
 
+
         public void Update(Category category)
         {
             using (var conn = Connection)
@@ -96,6 +97,20 @@ namespace Tabloid.Repositories
 
                 }
             }
+       }
+
+  public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Category WHERE Id =@id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            } 
         }
     }
 }
