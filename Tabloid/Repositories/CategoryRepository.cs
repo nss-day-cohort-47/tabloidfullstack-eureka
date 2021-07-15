@@ -112,7 +112,7 @@ namespace Tabloid.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
-            
+
         }
 
     }
