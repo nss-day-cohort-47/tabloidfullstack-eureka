@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using Tabloid.Models;
 using Tabloid.Utils;
 
@@ -54,7 +55,35 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        //public List<UserProfile> GetAdminUsers()
+        //{
+        //    using (var conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using(var cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"select id, usertypeid, displayname from UserProfile where usertypeid =1";
 
+        //            var reader = cmd.ExecuteReader();
+
+        //            var profiles = new List<UserProfile>();
+        //            while(reader.Read())
+        //            {
+        //                profiles.Add(new UserProfile()
+        //                {
+        //                    Id = DbUtils.GetInt(reader, "id"),
+        //                    UserTypeId = DbUtils.GetInt(reader, "usertypeid"),
+        //                    DisplayName=DbUtils.GetString(reader, "displayname")
+
+
+        //                });
+        //            }
+
+        //            reader.Close();
+        //            return profiles;
+        //        }
+        //    }
+        //}
         public void Add(UserProfile userProfile)
         {
             using (var conn = Connection)

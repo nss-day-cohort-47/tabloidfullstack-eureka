@@ -2,7 +2,7 @@ import { getToken } from "./authManager";
 
 const baseUrl = '/api/category';
 
-const getAllCategories = () => {
+export const getAllCategories = () => {
     return getToken().then((token) => {
         return fetch(`${baseUrl}`, {
             method: "GET",
@@ -19,4 +19,24 @@ const getAllCategories = () => {
     });
 };
 
-export default getAllCategories
+export const addCategory = (category) => {
+    return getToken().then((token) => {
+        return fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(category),
+        }).then(resp => {
+            if (resp.ok) {
+                return resp.json();
+            } else if (resp.status === 401) {
+                throw new Error("Unauthorized");
+            } else {
+                throw new Error("An unknown error occurred while trying to save a new category. ");
+            }
+        });
+    });
+}
+
