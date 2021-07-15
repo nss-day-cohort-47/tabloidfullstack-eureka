@@ -16,7 +16,20 @@ namespace Tabloid.Repositories
     {
 
         public TagsRespository(IConfiguration configuration) : base(configuration) { }
-
+        public void Add(Tag Tag) {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Tag (Name)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@name)";
+                    DbUtils.AddParameter(cmd, "@name", Tag.Name);
+                    Tag.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
         public List<Tag> GetAllTags()
         {
             using (var conn = Connection)

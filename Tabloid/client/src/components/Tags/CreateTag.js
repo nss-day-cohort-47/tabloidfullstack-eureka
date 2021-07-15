@@ -1,21 +1,30 @@
-import React from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router"
-import { Form } from "reactstrap"
+import { addTag } from "../../modules/tagManager"
+// import { Form } from "reactstrap"
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 const CreateTag = () => {
-    const history = useHistory()
-    const handleSubmitTag = (evt) => {
+    const history = useHistory();
+    const [tagName, setAddTag] = useState();
+    const submitForm = (evt) => {
         evt.preventDefault()
-        history.push("/Tags")
+        addTag({ name: tagName })
+            .then(() => history.push("/Tags"))
+            .catch((err) => alert(`An error ocurred: ${err.message}`));
     }
 
     return (<div>
-        <form>
-            <h2>Tag Name</h2>
-            <input type="text"></input>
-            <input type="Submit" onClick={handleSubmitTag}></input>
-        </form>
+        <Form onSubmit={submitForm}>
+            <FormGroup>
+                <Label for="tagName">Tag</Label>
+                <Input id="tagName" type="text" onChange={e => setAddTag(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+                <Button>Save</Button>
+            </FormGroup>
+        </Form>
     </div>)
 
 
