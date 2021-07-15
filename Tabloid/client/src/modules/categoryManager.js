@@ -39,9 +39,24 @@ export const addCategory = (category) => {
         });
     });
 }
-
-export const updateCategory = (category) => {
-    return getToken().then(() => {
+export const getCategoryById = (id) => {
+    return getToken().then((token) => {
+        return fetch (`${baseUrl}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }).then(resp => {
+            if(resp.ok){
+                return resp.json();
+            } else {
+                throw new Error("An unknown error occured while trying to get category by given id");
+            }
+        });
+    });
+}
+export const editCategory = (category) => {
+    return getToken().then((token) => {
         return fetch(`${baseUrl}/${category.id}`, {
             method: "PUT",
             headers: {
@@ -51,11 +66,11 @@ export const updateCategory = (category) => {
             body: JSON.stringify(category)
         }).then(resp => {
             if (resp.ok) {
-                return resp.json();
+                return;
             } else if (resp.status === 401) {
                 throw new Error("Unauthorized");
             } else {
-                throw new Error("An unknown error occured while trying to update a category.");
+                throw new Error("An unknown error occurred while trying to save a new category. ");
             }
         })
     })
