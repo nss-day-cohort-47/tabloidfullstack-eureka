@@ -51,7 +51,7 @@ export const CategoryForm = () => {
             </fieldset>
             <button className="btn btn-primary"
                 onClick={handleClickSaveCategory}>
-                    Save Article
+                    Save Category
                 </button>
         </form>
     )
