@@ -78,7 +78,7 @@ namespace Tabloid.Repositories
                 }
             }
         }
-<<<<<<< HEAD
+
 
         public void Update(Category category)
         {
@@ -98,8 +98,7 @@ namespace Tabloid.Repositories
                 }
             }
         }
-||||||| 530213b
-=======
+
 
         public void Delete(int id)
         {
@@ -115,6 +114,6 @@ namespace Tabloid.Repositories
             }
             
         }
->>>>>>> main
+
     }
 }
