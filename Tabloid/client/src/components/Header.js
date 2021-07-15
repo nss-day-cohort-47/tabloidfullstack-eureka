@@ -28,7 +28,13 @@ export default function Header({ isLoggedIn }) {
                 <NavLink tag={RRNavLink} to="/">Home</NavLink>
               </NavItem>
             }
+            {<>
+              <NavItem>
+                <NavLink tag={RRNavLink} to="/Tags">Tag Management </NavLink>
+              </NavItem>
+            </>}
           </Nav>
+
           <Nav navbar>
             {isLoggedIn &&
               <>
@@ -48,6 +54,7 @@ export default function Header({ isLoggedIn }) {
                 </NavItem>
               </>
             }
+
           </Nav>
         </Collapse>
       </Navbar>
