@@ -58,5 +58,12 @@ namespace Tabloid.Controllers
             _commentRepo.Update(comment);
             return NoContent();
         }
+
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int id, Comment comment)
+        //{
+        //    _commentRepo.Update(comment);
+        //    return NoContent();
+        //}
     }
 }
