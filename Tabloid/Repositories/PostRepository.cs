@@ -22,17 +22,17 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                      SELECT
-                        Id,
-                        Title,
-                        Content,
-                        ImageLocation,
-                        CreateDateTime,
-                        PublishDateTime,
-                        CategoryId,
-                        IsApproved,
-                        UserProfileId
-                        FROM Post
-                        ORDER BY CreateDateTime
+                        p.Id,
+                        p.Title,
+                        p.Content,
+                        p.ImageLocation,
+                        p.CreateDateTime,
+                        p.PublishDateTime,
+                        p.CategoryId,
+                        p.IsApproved,
+                        p.UserProfileId
+                        FROM Post p
+                        ORDER BY p.CreateDateTime
                 ";
 
                     var reader = cmd.ExecuteReader();
