@@ -1,10 +1,12 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import CategoryList from "./Category/CategoryList"
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import Tags from "./Tags/Tags";
 import { TagList } from "./Tags/TagList";
+import { CategoryForm } from "./Category/CategoryForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -19,6 +21,13 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+
+        <Route path="/addcategory">
+          <CategoryForm />
+        </Route>
+        <Route path="/categories">
+          < CategoryList />
         </Route>
 
         <Route path="/register">
