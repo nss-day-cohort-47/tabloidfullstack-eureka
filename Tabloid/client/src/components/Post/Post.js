@@ -9,9 +9,9 @@ const Post = ({ post }) => {
                 <p>
                     <strong>{post.title}</strong>
                 </p>
-                <p> Posted by:{post.userProfile.displayName}</p>
+                <p>Posted by :{post.userProfile.displayName}</p>
                 <p>{post.content}</p>
-                <p>{post.category.name}</p>
+                <p>Category: {post.category.name}</p>
             </CardBody >
         </Card >
     );
