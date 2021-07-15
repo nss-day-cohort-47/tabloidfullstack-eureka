@@ -4,6 +4,9 @@ import CategoryList from "./Category/CategoryList"
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import Tags from "./Tags/Tags";
+import { TagList } from "./Tags/TagList";
+import PostList from "./Post/PostList";
 import { CategoryForm } from "./Category/CategoryForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -14,14 +17,17 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/" exact>
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
         </Route>
-
+        <Route path="/Tags" exact>
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+        </Route>
         <Route path="/login">
           <Login />
         </Route>
-        
+
         <Route path="/addcategory">
           <CategoryForm />
         </Route>
+
         <Route path="/categories">
           < CategoryList />
         </Route>
@@ -30,6 +36,10 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Register />
         </Route>
       </Switch>
+
+      <Route path="/posts" exact>
+        <PostList />
+      </Route>
     </main>
   );
 };
