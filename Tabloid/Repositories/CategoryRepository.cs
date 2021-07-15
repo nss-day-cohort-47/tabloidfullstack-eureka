@@ -78,6 +78,7 @@ namespace Tabloid.Repositories
                 }
             }
         }
+<<<<<<< HEAD
 
         public void Update(Category category)
         {
@@ -97,5 +98,23 @@ namespace Tabloid.Repositories
                 }
             }
         }
+||||||| 530213b
+=======
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Category WHERE Id =@id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            
+        }
+>>>>>>> main
     }
 }
