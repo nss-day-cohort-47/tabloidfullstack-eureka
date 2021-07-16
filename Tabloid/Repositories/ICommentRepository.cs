@@ -12,5 +12,6 @@ namespace Tabloid.Repositories
         public Comment GetCommentById(int id);
         public void AddComment(Comment comment);
         public void Update(Comment comment);
+        public void Delete(int id);
     }
 }

@@ -59,11 +59,11 @@ namespace Tabloid.Controllers
             return NoContent();
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, Comment comment)
-        //{
-        //    _commentRepo.Update(comment);
-        //    return NoContent();
-        //}
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _commentRepo.Delete(id);
+            return NoContent();
+        }
     }
 }
