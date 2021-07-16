@@ -39,6 +39,9 @@ namespace Tabloid.Models
         public int UserTypeId { get; set; }
         public UserType UserType { get; set; }
 
+        [Required]
+        public bool IsDeleted { get; set; }
+
         public string FullName
         {
             get
