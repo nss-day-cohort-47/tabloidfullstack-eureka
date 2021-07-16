@@ -51,8 +51,10 @@ namespace Tabloid.Controllers
 
         // DELETE api/<TagsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _tagsRepository.DeleteTagById(id);
+            return NoContent();
         }
     }
 }
