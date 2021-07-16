@@ -15,8 +15,12 @@ const PostList = () => {
 
     return (
         <div>
-            {posts.map((post) => (
-                <Post post={post} key={post.id} />))}
+            {posts.map((post) => {
+                console.log(post)
+                return (
+                    <Post post={post} key={post.id} />)
+            })}
+
         </div>
     );
 }

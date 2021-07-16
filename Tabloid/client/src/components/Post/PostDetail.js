@@ -1,12 +1,11 @@
 import React from "react";
-import { Card, CardBody } from "react-strap";
+import { Card, CardBody } from "reactstrap";
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { getPostById } from "../../modules/postManager";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap"
 
-const PostDetails = () => {
+export const PostDetail = () => {
     const [postDetails, setPostDetails] = useState([]);
     const { id } = useParams;
 
@@ -23,12 +22,12 @@ const PostDetails = () => {
         <Card >
             < CardBody >
                 <p>
-                    <strong>{post.title}</strong>
+                    <strong>{postDetails.title}</strong>
                 </p>
-                <p>Posted by :{post.userProfile.displayName}</p>
-                <p>{post.content}</p>
-                <p>Category: {post.category.name}</p>
+                <p>{postDetails.content}</p>
             </CardBody >
         </Card >
     )
 }
+
+export default PostDetail

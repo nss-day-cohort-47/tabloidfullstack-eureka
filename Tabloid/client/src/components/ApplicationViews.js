@@ -10,6 +10,7 @@ import { TagList } from "./Tags/TagList";
 import PostList from "./Post/PostList";
 import { CategoryForm } from "./Category/CategoryForm";
 import { EditCategory } from "./Category/CategoryEditForm";
+import { PostDetail } from "./Post/PostDetail";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -51,7 +52,7 @@ export default function ApplicationViews({ isLoggedIn }) {
       </Route>
 
       <Route path="/posts/details/:id" exact>
-        <PostList />
+        <PostDetail />
       </Route>
 
 
