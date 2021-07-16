@@ -9,6 +9,7 @@ import Tags from "./Tags/Tags";
 import { TagList } from "./Tags/TagList";
 import PostList from "./Post/PostList";
 import { CategoryForm } from "./Category/CategoryForm";
+import { EditCategory } from "./Category/CategoryEditForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -31,6 +32,9 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/categories">
           < CategoryList />
+        </Route>
+        <Route path="/category/edit/:id">
+        {isLoggedIn ? <EditCategory /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/register">
