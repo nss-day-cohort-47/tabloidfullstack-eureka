@@ -5,8 +5,11 @@ import { Card, CardBody } from "reactstrap";
 
 const Category = ({ category, handleDeleteCategory }) => {
     const history = useHistory()
-  
+    console.log(category)
+     if (category.isDeleted === false) {
     return (
+
+          
         <Card>
             <CardBody>
                 <div>
@@ -16,8 +19,13 @@ const Category = ({ category, handleDeleteCategory }) => {
                     <button className="buttonRemoveCategory" type="button" onClick={() => handleDeleteCategory(category.id)}>Delete Category</button>
                 </div>
             </CardBody>
-        </Card>
+        </Card> 
+   
     );
+     }
+     else {
+         return <> </>
+     }
 };
 
 export default Category;

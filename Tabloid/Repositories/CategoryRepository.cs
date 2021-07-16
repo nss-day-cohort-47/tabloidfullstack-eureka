@@ -16,7 +16,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select Id, [Name] FROM Category";
+                    cmd.CommandText = @"Select Id, [Name], isDeleted FROM Category";
 
                     var reader = cmd.ExecuteReader();
 
@@ -26,7 +26,8 @@ namespace Tabloid.Repositories
                         categories.Add(new Category()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            Name = DbUtils.GetString(reader, "Name")
+                            Name = DbUtils.GetString(reader, "Name"),
+                            isDeleted=reader.GetBoolean(reader.GetOrdinal("isDeleted"))
                         });
                     }
                     reader.Close();
@@ -107,7 +108,9 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Category WHERE Id =@id";
+                    cmd.CommandText = @"UPDATE Category
+                                SET isDeleted = 1
+                                WHERE Id =@id"; 
                     DbUtils.AddParameter(cmd, "@id", id);
                     cmd.ExecuteNonQuery();
                 }
