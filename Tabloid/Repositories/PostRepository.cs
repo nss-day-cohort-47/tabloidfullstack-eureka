@@ -93,7 +93,7 @@ namespace Tabloid.Repositories
         }
 
 
-        public Post GetPostByIdWithComments(int id)
+        public Post GetPostById(int id)
         {
             using (var conn = Connection)
             {
@@ -110,18 +110,10 @@ namespace Tabloid.Repositories
                     p.PublishDateTime,
                     p.CategoryId,
                     p.IsApproved,
-                    p.UserProfileId,
-                    c.Id AS commentId,
-                    c.PostId,
-                    c.UserProfileId AS commentUserProfileId,
-                    c.Subject,
-                    c.Content AS CommentContent,
-                    c.CreateDateTime AS CommentCreateDateTime
+                    p.UserProfileId
 
                     FROM Post p
-                    LEFT JOIN UserProfile up ON up.Id = p.UserProfileId
-                    JOIN Comment c ON p.Id = c.PostId
-                    WHERE p.Id = @id";
+                    WHERE p.Id = @id AND isApproved = 1";
 
                     DbUtils.AddParameter(cmd, "@id", id);
 
@@ -140,30 +132,19 @@ namespace Tabloid.Repositories
                                 ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
                                 CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
                                 PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
-                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
-                                Comment = new List<Comment>()
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                                CategoryId = DbUtils.GetInt(reader, "CategoryId"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
                             };
-                            }
-                            if (DbUtils.IsNotDbNull(reader, "CommentId"))
-                            {
-                                post.Comment.Add(new Comment()
-                                {
-                                    Id = DbUtils.GetInt(reader, "CommentId"),
-                                    Subject = DbUtils.GetString(reader, "Subject"),
-                                    Content = DbUtils.GetString(reader, "CommentContent"),
-                                    PostId = id,
-                                    UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId")
-                                });
-                            }
                         }
-
-                        reader.Close();
-
-                        return post;
+                        
                     }
+                    reader.Close();
+                    return post;
                 }
             }
         }
 
     }
+}
 

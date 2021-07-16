@@ -25,9 +25,9 @@ namespace Tabloid.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPostByIdWithComments(int id)
+        public IActionResult GetPostById(int id)
         {
-            var post = _postRepository.GetPostByIdWithComments(id);
+            var post = _postRepository.GetPostById(id);
             return Ok(post);
         }
 

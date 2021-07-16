@@ -34,7 +34,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           < CategoryList />
         </Route>
         <Route path="/category/edit/:id">
-        {isLoggedIn ? <EditCategory /> : <Redirect to="/login" />}
+          {isLoggedIn ? <EditCategory /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/register">
@@ -49,6 +49,12 @@ export default function ApplicationViews({ isLoggedIn }) {
       <Route path="/posts" exact>
         <PostList />
       </Route>
+
+      <Route path="/posts/details/:id" exact>
+        <PostList />
+      </Route>
+
+
     </main>
   );
 };
