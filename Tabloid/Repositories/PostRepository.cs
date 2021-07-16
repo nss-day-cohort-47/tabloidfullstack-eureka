@@ -111,15 +111,17 @@ namespace Tabloid.Repositories
                     p.CategoryId,
                     p.IsApproved,
                     p.UserProfileId,
-                    up.Id AS postUserProfileId,
-                    up.DisplayName
-                    up.ImageLocation,
-                    up.UserTypeId
+                    c.Id AS commentId,
+                    c.PostId,
+                    c.UserProfileId AS commentUserProfileId,
+                    c.Subject,
+                    c.Content AS CommentContent,
+                    c.CreateDateTime AS CommentCreateDateTime
 
                     FROM Post p
                     LEFT JOIN UserProfile up ON up.Id = p.UserProfileId
-                    JOIN Comment c ON c.Id = p.CategoryId
-                    WHERE v.Id = @id";
+                    JOIN Comment c ON p.Id = c.PostId
+                    WHERE p.Id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
 
@@ -131,44 +133,37 @@ namespace Tabloid.Repositories
                         if (post == null)
                         {
                             post = new Post()
-                        //                    {
-                        //                        Id = id,
-                        //                        Title = DbUtils.GetString(reader, "Title"),
-                        //                        Description = DbUtils.GetString(reader, "Description"),
-                        //                        DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
-                        //                        Url = DbUtils.GetString(reader, "Url"),
-                        //                        UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
-                        //                        UserProfile = new UserProfile()
-                        //                        {
-                        //                            Id = DbUtils.GetInt(reader, "VideoUserProfileId"),
-                        //                            Name = DbUtils.GetString(reader, "Name"),
-                        //                            Email = DbUtils.GetString(reader, "Email"),
-                        //                            DateCreated = DbUtils.GetDateTime(reader, "UserProfileDateCreated"),
-                        //                            ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl"),
-                        //                        },
-                        //                        Comments = new List<Comment>()
-                        //                    };
-                        //                }
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                Title = DbUtils.GetString(reader, "Title"),
+                                Content = DbUtils.GetString(reader, "Content"),
+                                ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
+                                PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                                Comment = new List<Comment>()
+                            };
+                            }
+                            if (DbUtils.IsNotDbNull(reader, "CommentId"))
+                            {
+                                post.Comment.Add(new Comment()
+                                {
+                                    Id = DbUtils.GetInt(reader, "CommentId"),
+                                    Subject = DbUtils.GetString(reader, "Subject"),
+                                    Content = DbUtils.GetString(reader, "CommentContent"),
+                                    PostId = id,
+                                    UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId")
+                                });
+                            }
+                        }
 
-                            //                if (DbUtils.IsNotDbNull(reader, "CommentId"))
-                            //                {
-                            //                    video.Comments.Add(new Comment()
-                            //                    {
-                            //                        Id = DbUtils.GetInt(reader, "CommentId"),
-                            //                        Message = DbUtils.GetString(reader, "Message"),
-                            //                        VideoId = id,
-                            //                        UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId")
-                            //                    });
-                            //                }
-                            //            }
+                        reader.Close();
 
-                            //            reader.Close();
-
-                            return post;
-
+                        return post;
+                    }
                 }
             }
         }
+
     }
-}
 
