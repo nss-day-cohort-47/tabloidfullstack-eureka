@@ -16,7 +16,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select Id, [Name] FROM Category";
+                    cmd.CommandText = @"Select Id, [Name], isDeleted FROM Category";
 
                     var reader = cmd.ExecuteReader();
 
@@ -26,7 +26,8 @@ namespace Tabloid.Repositories
                         categories.Add(new Category()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            Name = DbUtils.GetString(reader, "Name")
+                            Name = DbUtils.GetString(reader, "Name"),
+                            isDeleted=reader.GetBoolean(reader.GetOrdinal("isDeleted"))
                         });
                     }
                     reader.Close();
@@ -35,6 +36,33 @@ namespace Tabloid.Repositories
             }
         }
 
+        public Category GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            Select id, [Name] from category where id = @id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Category category = null;
+                    if (reader.Read())
+                    {
+                        category = new Category()
+                        {
+                            Id = id,
+                            Name = DbUtils.GetString(reader, "Name")
+                        };
+                    }
+                    reader.Close();
+                    return category;
+                }
+            }
+        }
         public void AddCategory(Category category)
         {
             using (var conn = Connection)
@@ -52,6 +80,27 @@ namespace Tabloid.Repositories
             }
         }
 
+
+        public void Update(Category category)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE Category
+                                SET [Name] = @name
+                                WHERE Id =@id";
+                    DbUtils.AddParameter(cmd, "@name", category.Name);
+                    DbUtils.AddParameter(cmd, "@id", category.Id);
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+
         public void Delete(int id)
         {
             using (var conn = Connection)
@@ -59,12 +108,15 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Category WHERE Id =@id";
+                    cmd.CommandText = @"UPDATE Category
+                                SET isDeleted = 1
+                                WHERE Id =@id"; 
                     DbUtils.AddParameter(cmd, "@id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
-            
+
         }
+
     }
 }

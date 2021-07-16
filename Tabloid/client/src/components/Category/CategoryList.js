@@ -34,7 +34,7 @@ const CategoryList = () => {
                     <div>
                         <h4>Categories</h4>
                         {categories.map(cat =>
-                            <Category category={cat} key={cat.id} handleDeleteCategory={handleDeleteCategory} />
+                            <Category category={cat}  key={cat.id} handleDeleteCategory={handleDeleteCategory} />
 
                         )}
                     </div>
