@@ -14,7 +14,7 @@ const CategoryList = () => {
     };
 
     const handleDeleteCategory = (id) => {
-     window.confirm(`Are you sure you want to delete this category?`);
+        window.confirm(`Are you sure you want to delete this category?`);
         deleteCategory(id)
             .then(() => getCategories())
         history.push("/categories")
@@ -34,7 +34,7 @@ const CategoryList = () => {
                     <div>
                         <h4>Categories</h4>
                         {categories.map(cat =>
-                            <Category category={cat}  key={cat.id} handleDeleteCategory={handleDeleteCategory} />
+                            <Category category={cat} key={cat.id} handleDeleteCategory={handleDeleteCategory} />
 
                         )}
                     </div>

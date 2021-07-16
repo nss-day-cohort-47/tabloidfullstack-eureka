@@ -1,14 +1,21 @@
 import React from "react";
-import { Card, CardBody } from "reactstrap";
+import { useHistory } from "react-router";
+import { Button, Card, CardBody } from "reactstrap";
+import { deleteTagById, getAllTags } from "../../modules/tagManager";
 
 
-const Tags = ({ Tag }) => {
-    console.log(Tag, "the tag")
+const Tags = ({ Tag, handleDeleteTag }) => {
+    const history = useHistory();
+
     return (
         <Card >
             <CardBody>
-                <strong>{Tag.name}</strong>
+                <div>
+                    <strong>{Tag.name}</strong>
+                </div>
+                <Button className="buttonRemoveCategory" onClick={() => handleDeleteTag(Tag.id)}>Delete</Button>
             </CardBody>
+
         </Card>
 
     )

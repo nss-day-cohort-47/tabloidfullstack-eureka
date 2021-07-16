@@ -31,6 +31,24 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public void DeleteTagById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update Tag 
+                                        Set isDeleted = 1
+                                        Where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+
+        }
         public List<Tag> GetAllTags()
         {
             using (var conn = Connection)
@@ -38,7 +56,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select id, name 
+                    cmd.CommandText = @"Select id, name , isDeleted
                                         From Tag
                                         Order by name;";
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -46,12 +64,16 @@ namespace Tabloid.Repositories
                     Tag tag = null;
                     while (reader.Read())
                     {
-                        tag = new Tag()
+                        if (!reader.GetBoolean(reader.GetOrdinal("isDeleted")))
                         {
-                            Id = DbUtils.GetInt(reader, "id"),
-                            Name = DbUtils.GetString(reader, "name"),
-                        };
-                        Tags.Add(tag);
+
+                            tag = new Tag()
+                            {
+                                Id = DbUtils.GetInt(reader, "id"),
+                                Name = DbUtils.GetString(reader, "name"),
+                            };
+                            Tags.Add(tag);
+                        }
 
                     }
                     reader.Close();
