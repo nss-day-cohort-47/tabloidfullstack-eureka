@@ -10,6 +10,7 @@ import PostList from "./Post/PostList";
 import { CategoryForm } from "./Category/CategoryForm";
 import { EditCategory } from "./Category/CategoryEditForm";
 import CreateTag from "./Tags/CreateTag";
+import { CommentList } from "./Comment/CommentList";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -46,6 +47,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/allusers">
           <UserList />
+        </Route>
+
+        <Route path="/comment">
+          <CommentList />
         </Route>
       </Switch>
 
