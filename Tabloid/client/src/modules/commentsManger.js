@@ -1,10 +1,10 @@
 import { getToken } from "./authManager";
 
-const baseUrl = '/api/comment';
+const baseUrl = `/api/comment?id=${id}`;
 
 export const getCommentsByPostId = (id) => {
     return getToken().then((token) => {
-        return fetch(baseUrl, {
+        return fetch(`${baseUrl}/posts/${id}/comments`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
