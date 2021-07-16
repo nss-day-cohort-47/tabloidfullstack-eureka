@@ -16,7 +16,8 @@ namespace Tabloid.Controllers
     {
         private readonly ITagsRespository _tagsRepository;
 
-        public TagsController(ITagsRespository tagsRepository) {
+        public TagsController(ITagsRespository tagsRepository)
+        {
             _tagsRepository = tagsRepository;
         }
 
@@ -36,8 +37,10 @@ namespace Tabloid.Controllers
 
         // POST api/<TagsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Tag tag)
         {
+            _tagsRepository.Add(tag);
+            return CreatedAtAction(nameof(GetAll), new { Id = tag.Id }, tag);
         }
 
         // PUT api/<TagsController>/5
