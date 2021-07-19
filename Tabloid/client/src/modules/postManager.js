@@ -6,12 +6,7 @@ export const getAllPosts = () => {
         .then((res) => res.json())
 };
 
-<<<<<<< HEAD
-export const getPostById = (id) => {
-    return fetch(`${baseUrl}/${id}`)
-        .then((res) => res.json())
-};
-=======
+
 export const createPost = (post) => {
     return getToken().then((token) => {
         return fetch(baseUrl, {
@@ -32,4 +27,21 @@ export const createPost = (post) => {
         });
     });
 }
->>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
+
+export const getPostById = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            console.log(resp)
+            if (resp.ok) {
+                return resp.json();
+            } else {
+                throw new Error("An unknown error occurred while trying to get post details.");
+            }
+        });
+    });
+};

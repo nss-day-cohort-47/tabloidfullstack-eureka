@@ -27,7 +27,6 @@ namespace Tabloid.Controllers
         {
             return Ok(_postRepository.GetAll());
         }
-<<<<<<< HEAD
 
         [HttpGet("{id}")]
         public IActionResult GetPostById(int id)
@@ -37,7 +36,6 @@ namespace Tabloid.Controllers
         }
 
 
-=======
         [HttpPost]
         public IActionResult Post(Post post)
         {
@@ -53,6 +51,5 @@ namespace Tabloid.Controllers
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
->>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
     }
 }

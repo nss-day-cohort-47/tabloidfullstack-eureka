@@ -9,13 +9,10 @@ import { TagList } from "./Tags/TagList";
 import PostList from "./Post/PostList";
 import { CategoryForm } from "./Category/CategoryForm";
 import { EditCategory } from "./Category/CategoryEditForm";
-<<<<<<< HEAD
 import { PostDetail } from "./Post/PostDetail";
-=======
 import { PostForm } from "./Post/PostForm";
 import CreateTag from "./Tags/CreateTag";
 
->>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -58,18 +55,14 @@ export default function ApplicationViews({ isLoggedIn }) {
       <Route path="/posts" exact>
         <PostList />
       </Route>
-<<<<<<< HEAD
 
       <Route path="/posts/details/:id" exact>
         <PostDetail />
       </Route>
 
-
-=======
       <Route path="/posts/add">
         <PostForm />
       </Route>
->>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
     </main>
   );
 };

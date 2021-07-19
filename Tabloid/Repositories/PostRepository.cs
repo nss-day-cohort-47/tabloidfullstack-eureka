@@ -92,12 +92,7 @@ namespace Tabloid.Repositories
             }
         }
 
-<<<<<<< HEAD
-
         public Post GetPostById(int id)
-=======
-        public void AddPost (Post post)
->>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
         {
             using (var conn = Connection)
             {
@@ -105,7 +100,6 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-<<<<<<< HEAD
                     SELECT
                     p.Id,
                     p.Title,
@@ -115,9 +109,12 @@ namespace Tabloid.Repositories
                     p.PublishDateTime,
                     p.CategoryId,
                     p.IsApproved,
-                    p.UserProfileId
+                    p.UserProfileId,
+                    up.Id AS postUserProfileId,
+                    up.DisplayName
 
                     FROM Post p
+                    LEFT JOIN UserProfile up on p.UserProfileId = up.Id
                     WHERE p.Id = @id AND isApproved = 1";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -139,10 +136,16 @@ namespace Tabloid.Repositories
                                 PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
                                 IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
                                 CategoryId = DbUtils.GetInt(reader, "CategoryId"),
-                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = DbUtils.GetInt(reader, "postUserProfileId"),
+                                    DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                }
+
                             };
                         }
-                        
+
                     }
                     reader.Close();
                     return post;
@@ -150,26 +153,79 @@ namespace Tabloid.Repositories
             }
         }
 
-=======
+        public void AddPost(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
                             INSERT INTO POST (Title, Content, ImageLocation, CreateDateTime, PublishDateTime, IsApproved, CategoryId, UserProfileId, isDeleted)
                             OUTPUT INSERTED.ID
                             VALUES(
                                 @Title, @Content, @ImageLocation, @CreateDateTime, @PublishDateTime, 1, @CategoryId, @UserProfileId, 0 )";
 
                     DbUtils.AddParameter(cmd, @"Title", post.Title);
-                    DbUtils.AddParameter(cmd, "@Content",post.Content);
-                    DbUtils.AddParameter(cmd, "@ImageLocation",post.ImageLocation);
-                    DbUtils.AddParameter(cmd, "@CreateDateTime",post.CreateDateTime);
-                    DbUtils.AddParameter(cmd, "@PublishDateTime",post.PublishDateTime);
+                    DbUtils.AddParameter(cmd, "@Content", post.Content);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", post.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@PublishDateTime", post.PublishDateTime);
                     DbUtils.AddParameter(cmd, "@CategoryId", post.CategoryId);
-                    DbUtils.AddParameter(cmd, "@UserProfileId",post.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
 
                     post.Id = (int)cmd.ExecuteScalar();
 
                 }
             }
         }
->>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
+
+        //public void Delete(int id)
+        //{
+        //    using (var conn = Connection)
+        //    {
+        //        conn.Open();
+
+        //        using (var cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"
+        //                    UPDATE Post
+        //                    SET IsDeleted = 1
+        //                    WHERE Id = @id
+        //                ";
+
+        //            DbUtils.AddParameter(cmd, "@id", id);
+
+
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
+        //public void Update(Post post)
+        //{
+        //    using (var conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (var cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"
+        //                UPDATE Post
+        //                   SET Title = @Title,
+        //                       Content = @content,
+        //                       ImageLocation = @ImageLocation,
+        //                 WHERE Id = @Id";
+
+
+        //            DbUtils.AddParameter(cmd, "@Title", post.Title);
+        //            DbUtils.AddParameter(cmd, "@Description", post.Content);
+        //            DbUtils.AddParameter(cmd, "@ImageLocation", post.ImageLocation);
+
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
     }
 }
 
