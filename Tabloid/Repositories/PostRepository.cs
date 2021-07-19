@@ -180,27 +180,19 @@ namespace Tabloid.Repositories
             }
         }
 
-        //public void Delete(int id)
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        conn.Open();
-
-        //        using (var cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //                    UPDATE Post
-        //                    SET IsDeleted = 1
-        //                    WHERE Id = @id
-        //                ";
-
-        //            DbUtils.AddParameter(cmd, "@id", id);
-
-
-        //            cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Post WHERE Id = @Id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         //public void Update(Post post)
         //{
