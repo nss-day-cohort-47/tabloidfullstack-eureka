@@ -23,10 +23,10 @@ namespace Tabloid.Controllers
             //    //_postRepository = postRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetCommentsById(int id)
+        [HttpGet("post/{postId}")]
+        public IActionResult GetCommentsById(int postId)
         {
-            return Ok(_commentRepo.GetCommentsById(id));
+            return Ok(_commentRepo.GetCommentsById(postId));
         }
 
         [HttpGet("{id}")]

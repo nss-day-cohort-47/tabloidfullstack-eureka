@@ -4,7 +4,7 @@ const baseUrl = '/api/comment';
 
 export const getCommentsByPostId = (postId) => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/${postId}`, {
+        return fetch(`${baseUrl}/post/${postId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
