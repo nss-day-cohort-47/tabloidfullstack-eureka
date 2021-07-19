@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Tabloid.Models;
 using Tabloid.Repositories;
 
 namespace Tabloid.Controllers
@@ -13,16 +15,19 @@ namespace Tabloid.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
-        public PostController(IPostRepository postRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public PostController(IPostRepository postRepository, IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
             return Ok(_postRepository.GetAll());
         }
+<<<<<<< HEAD
 
         [HttpGet("{id}")]
         public IActionResult GetPostById(int id)
@@ -32,5 +37,22 @@ namespace Tabloid.Controllers
         }
 
 
+=======
+        [HttpPost]
+        public IActionResult Post(Post post)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            post.UserProfileId = currentUserProfile.Id;
+            post.CreateDateTime = DateTime.Now;
+            post.PublishDateTime = DateTime.Now;
+            _postRepository.AddPost(post);
+            return CreatedAtAction(nameof(GetAll), new { id = post.Id }, post);
+        }
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+        }
+>>>>>>> fdf41040b4ce578c56a9c10a6e7e7932db9a4794
     }
 }
