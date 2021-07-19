@@ -32,14 +32,8 @@ export const PostForm = () => {
 
     const handleClickSavePost = (event) => {
         event.preventDefault()
-
        createPost(post)
-       .then(() =>setPost ({
-        title: "",
-        content: "",
-        imageLocation: "",
-        categoryId: 0
-       })).then((p) => {
+      .then(() => {
            history.push("/posts");
        })
     }
