@@ -40,8 +40,21 @@ export const getPostById = (id) => {
             if (resp.ok) {
                 return resp.json();
             } else {
-                throw new Error("An unknown error occurred while trying to get post details.");
+                throw new Error("An unknown error occurred while trying to delete post.");
             }
         });
     });
+};
+
+export const deletePost = (id) => {
+    return getToken().then((token) => {
+
+        return fetch(`${baseUrl}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+    })
 };
