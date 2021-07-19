@@ -13,6 +13,7 @@ import { PostDetail } from "./Post/PostDetail";
 import { PostForm } from "./Post/PostForm";
 import CreateTag from "./Tags/CreateTag";
 import { CommentList } from "./Comment/CommentList";
+import { CommentForm } from "./Comment/CommentForm";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -52,8 +53,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           <UserList />
         </Route>
 
-        <Route path="/comment/:id">
+        <Route path="/posts/details/comment/:id">
           <CommentList />
+        </Route>
+
+        <Route path="/addcomment">
+          <CommentForm />
         </Route>
       </Switch>
 

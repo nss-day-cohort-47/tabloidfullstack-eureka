@@ -43,6 +43,7 @@ namespace Tabloid.Controllers
         [HttpPost("add")]
         public IActionResult Create(Comment comment)
         {
+            comment.CreateDateTime = DateTime.Now;
             _commentRepo.AddComment(comment);
             return CreatedAtAction("GetCommentById", new { id = comment.Id }, comment);
         }
