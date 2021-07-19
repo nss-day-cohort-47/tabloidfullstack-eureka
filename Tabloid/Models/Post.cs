@@ -14,6 +14,7 @@ namespace Tabloid.Models
         public DateTime CreateDateTime { get; set; }
         public DateTime PublishDateTime { get; set; }
         public bool IsApproved { get; set; }
+        public bool IsDeleted { get; set; }
         public int CategoryId { get; set; }
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }

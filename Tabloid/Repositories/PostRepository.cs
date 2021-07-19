@@ -31,6 +31,7 @@ namespace Tabloid.Repositories
                     p.CategoryId,
                     p.IsApproved,
                     p.UserProfileId,
+                    p.isDeleted AS postIsDeleted,
                     c.Id AS postCategoryId,
                     c.Name,
                     up.Id AS postUserProfileId,
@@ -46,7 +47,7 @@ namespace Tabloid.Repositories
                     LEFT JOIN UserProfile up ON up.Id = p.UserProfileId
                     JOIN Category c ON c.Id = p.CategoryId
 
-                    WHERE isApproved = 1
+                    WHERE isApproved = 1 AND p.isDeleted = 0
                     ORDER BY CreateDateTime
                     ";
 
@@ -70,6 +71,7 @@ namespace Tabloid.Repositories
                                 Name = DbUtils.GetString(reader, "Name"),
                             },
                             IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                            IsDeleted = reader.GetBoolean(reader.GetOrdinal("postIsDeleted")),
                             UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
                             UserProfile = new UserProfile()
                             {
@@ -108,6 +110,7 @@ namespace Tabloid.Repositories
                     p.CreateDateTime,
                     p.PublishDateTime,
                     p.CategoryId,
+                    p.isDeleted AS postIsDeleted,
                     p.IsApproved,
                     p.UserProfileId,
                     up.Id AS postUserProfileId,
@@ -115,7 +118,7 @@ namespace Tabloid.Repositories
 
                     FROM Post p
                     LEFT JOIN UserProfile up on p.UserProfileId = up.Id
-                    WHERE p.Id = @id AND isApproved = 1";
+                    WHERE p.Id = @id AND isApproved = 1 AND p.isDeleted = 0 ";
 
                     DbUtils.AddParameter(cmd, "@id", id);
 
@@ -135,6 +138,7 @@ namespace Tabloid.Repositories
                                 CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
                                 PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
                                 IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                                IsDeleted = reader.GetBoolean(reader.GetOrdinal("postIsDeleted")),
                                 CategoryId = DbUtils.GetInt(reader, "CategoryId"),
                                 UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
                                 UserProfile = new UserProfile()
@@ -185,10 +189,18 @@ namespace Tabloid.Repositories
             using (var conn = Connection)
             {
                 conn.Open();
+
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Post WHERE Id = @Id";
+                    cmd.CommandText = @"
+                            UPDATE Post
+                            SET IsDeleted = 1
+                            WHERE Id = @id
+                        ";
+
                     DbUtils.AddParameter(cmd, "@id", id);
+
+
                     cmd.ExecuteNonQuery();
                 }
             }
