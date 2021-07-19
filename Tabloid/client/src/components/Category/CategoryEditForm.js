@@ -29,30 +29,30 @@ export const EditCategory = () => {
         event.preventDefault()
         history.push('/categories')
     }
-    useEffect(() =>{
+    useEffect(() => {
         getCategoryById(id).then(setCategory)
     }, [id])
 
     return (
-        <Container className= "justified-content-center">
+        <Container className="justified-content-center">
             <Form>
                 <FormGroup>
                     <label> Category Name: </label>
-                    <input type= "text"
-                    id ="name"
-                    onChange ={handleInputChange}
-                    required
-                    autoComplete="off"
-                    className="form-control"
-                    defaultValue={category.name}
+                    <input type="text"
+                        id="name"
+                        onChange={handleInputChange}
+                        required
+                        autoComplete="off"
+                        className="form-control"
+                        defaultValue={category.name}
                     />
                 </FormGroup>
-                <Button className ="article-btn"
-                onClick ={handleSaveEvent}>
+                <Button className="article-btn"
+                    onClick={handleSaveEvent}>
                     Save Category
                 </Button>
-                <Button className ="article-btn"
-                onClick = {handleCancelSave}>
+                <Button className="article-btn"
+                    onClick={handleCancelSave}>
                     Cancel
                 </Button>
             </Form>

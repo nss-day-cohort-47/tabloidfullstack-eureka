@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Tabloid.Models;
 using Tabloid.Utils;
 
@@ -154,6 +155,7 @@ namespace Tabloid.Repositories
             }
         }
 
+   
         /*
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
