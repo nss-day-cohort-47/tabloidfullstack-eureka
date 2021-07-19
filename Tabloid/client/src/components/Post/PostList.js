@@ -19,8 +19,12 @@ const PostList = () => {
         <>
             <button className="btn btn-primary" onClick={() => history.push("/posts/add")}>Create Post</button>
         <div>
-            {posts.map((post) => (
-                <Post post={post} key={post.id} />))}
+            {posts.map((post) => {
+                console.log(post)
+                return (
+                    <Post post={post} key={post.id} />)
+            })}
+
         </div>
         </>
     );
