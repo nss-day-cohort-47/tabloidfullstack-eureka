@@ -23,10 +23,41 @@ namespace Tabloid.Controllers
             //    //_postRepository = postRepository;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetCommentsById(int id)
+        [HttpGet("post/{postId}")]
+        public IActionResult GetCommentsById(int postId)
         {
-            return Ok(_commentRepo.GetCommentsById(id));
+            return Ok(_commentRepo.GetCommentsById(postId));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetCommentById(int id)
+        {
+            var comment = _commentRepo.GetCommentById(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return Ok(comment);
+        }
+
+        [HttpPost("add")]
+        public IActionResult Create(Comment comment)
+        {
+            comment.CreateDateTime = DateTime.Now;
+            _commentRepo.AddComment(comment);
+            return CreatedAtAction("GetCommentById", new { id = comment.Id }, comment);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return BadRequest();
+            }
+
+            _commentRepo.Update(comment);
+            return NoContent();
         }
     }
 }

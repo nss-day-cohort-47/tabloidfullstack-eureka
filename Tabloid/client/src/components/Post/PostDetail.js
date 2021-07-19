@@ -38,7 +38,13 @@ export const PostDetail = () => {
                 <p><b>Image:</b><img src={post.imageLocation} alt="display image" />
                 </p>
                 <p><b>Content:</b> {post.content}</p>
+
+                <Link to={`comment/${id}`}>
+                    <button>View Comments</button>
+                </Link>
+
                 <button onClick={handleDelete}>Delete</button>
+
             </CardBody >
         </Card >
     )
