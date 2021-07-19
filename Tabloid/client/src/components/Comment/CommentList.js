@@ -13,6 +13,8 @@ export const CommentList = () => {
         getCommentsByPostId(id).then(setComments);
     };
 
+    console.log(comments);
+
     useEffect(() => {
         getComments();
     }, []);
