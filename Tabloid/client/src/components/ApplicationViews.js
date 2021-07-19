@@ -49,7 +49,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <UserList />
         </Route>
 
-        <Route path="/posts/:id/comments">
+        <Route path="/comment/:id">
           <CommentList />
         </Route>
       </Switch>

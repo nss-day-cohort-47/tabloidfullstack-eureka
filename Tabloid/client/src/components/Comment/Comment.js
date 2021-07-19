@@ -4,21 +4,17 @@ import { Card, CardBody } from "reactstrap";
 
 const Comment = ({ comment }) => {
     const history = useHistory()
-    if (comment.isDeleted === false) {
-        return (
-            <Card>
-                <CardBody>
-                    <div>
-                        <h3>{comment.Subject}</h3>
-                        <p>{comment.Content}</p>
-                        <p>{comment.CreateDateTime}</p>
-                    </div>
-                </CardBody>
-            </Card>
-        );
-    } else {
-        return <> </>
-    }
+    return (
+        <Card>
+            <CardBody>
+                <div>
+                    <h3>{comment.subject}</h3>
+                    <p>{comment.content}</p>
+                    <p>{comment.createDateTime}</p>
+                </div>
+            </CardBody>
+        </Card>
+    );
 };
 
 export default Comment;
